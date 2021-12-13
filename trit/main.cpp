@@ -86,6 +86,17 @@ int main() {
 	test2[4] = True;	
 
 	TritSet res(3);
+
+	res = test1 & test2;
+
+	std::cout << test1 << std::endl << test2 << std::endl << res << std::endl;
+
+	assert(res.getSize() == 9);
+	assert(res[0] == False);
+	assert(res[2] == False);
+	assert(res[3] == Unknown);
+
+
 	res = test1 | test2;
 	
 	assert(res.getSize() == 9);
@@ -98,13 +109,6 @@ int main() {
 	assert(res[0] == Unknown);
 	assert(res[2] == True);
 	assert(res[3] == False);
-
-	res = test1 & test2;
-
-	assert(res.getSize() == 9);
-	assert(res[0] == False);
-	assert(res[2] == False);
-	assert(res[3] == Unknown);
 
 	//-----------???------------------
 
