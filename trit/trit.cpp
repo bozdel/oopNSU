@@ -68,14 +68,11 @@ t t t t
 TritSet operator|(TritSet& set1, TritSet& set2) {
 	size_t size1 = set1.getSize();
 	size_t size2 = set2.getSize();
-	size_t totalSize = size1 > size2 ? size1 : size2;
+	size_t maxSize = size1 > size2 ? size1 : size2;
 
-	set1.resize(totalSize);
-	set2.resize(totalSize);
-
-	TritSet result(totalSize);
+	TritSet result(maxSize);
 	int valuesTable[3][3] = {{0,0,2},{0,1,2},{2,2,2}};
-	for (int i = 0; i < totalSize; i++) {
+	for (int i = 0; i < maxSize; i++) {
 		result[i] = valuesTable[set1[i]][set2[i]];
 	}
 	return result;
@@ -91,14 +88,11 @@ t u f t
 TritSet operator&(TritSet& set1, TritSet& set2) {
 	size_t size1 = set1.getSize();
 	size_t size2 = set2.getSize();
-	size_t totalSize = size1 > size2 ? size1 : size2;
+	size_t maxSize = size1 > size2 ? size1 : size2;
 
-	set1.resize(totalSize);
-	set2.resize(totalSize);
-
-	TritSet result(totalSize);
+	TritSet result(maxSize);
 	int valuesTable[3][3] = {{0,1,0},{1,1,1},{0,1,2}};
-	for (int i = 0; i < totalSize; i++) {
+	for (int i = 0; i < maxSize; i++) {
 		result[i] = valuesTable[set1[i]][set2[i]];
 	}
 	return result;
@@ -123,19 +117,14 @@ TritSet TritSet::operator~() {
 //-------------ProxyTrit------------------
 
 void ProxyTrit::operator=(const int trit) {
-	try {
-		if (subContainer == nullptr && trit != Unknown) throw -1;
-		if (subContainer == nullptr && trit == Unknown) throw -2;
+	if (subContainer == nullptr && trit != Unknown) {
+		std::cerr << "index out of range" << std::endl;
+		std::cerr << "aborting function" << std::endl;
+		return;
 	}
-	catch (int i) {
-		if (i == -1) {
-			std::cout << "index out of range" << std::endl;
-			std::cout << "aborting function" << std::endl;
-			return;
-		}
-		if (i == -2) {
-			return;
-		}
+	if (subContainer == nullptr && trit == Unknown) {
+		std::cerr << "aborting function" << std::endl;
+		return;
 	}
 
 	switch (trit) {
